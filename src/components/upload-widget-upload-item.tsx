@@ -1,8 +1,16 @@
 import * as Progress from '@radix-ui/react-progress';
 import { Download, ImageUp, Link2, RefreshCcw, X } from 'lucide-react';
 import { motion } from 'motion/react';
+import type { Upload } from '../store/uploads';
+import { formatBytes } from '../util';
 import { Button } from './ui/button';
-export function UploadWidgetUploadItem() {
+
+interface UploadWidgetUploadItemProps {
+	upload: Upload;
+}
+export function UploadWidgetUploadItem({
+	upload,
+}: UploadWidgetUploadItemProps) {
 	return (
 		<motion.div
 			className='p-3 rounded-lg flex flex-col gap-3 shadow-content bg-white/[0.02] relative overflow-hidden'
@@ -16,11 +24,13 @@ export function UploadWidgetUploadItem() {
 						className='size-3 text-zinc-300'
 						strokeWidth={1.5}
 					/>
-					<span>screenshot.jpg</span>
+					<span>{upload.name}</span>
 				</span>
 
 				<span className='text-xxs text-zinc-400 flex gap-1.5 items-center'>
-					<span className='line-through'>3MB</span>
+					<span className='line-through'>
+						{formatBytes(upload.file.size)}
+					</span>
 					<div className='size-1 rounded-full bg-zinc-700' />
 					<span>
 						300KB
